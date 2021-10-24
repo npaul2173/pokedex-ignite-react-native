@@ -22,6 +22,6 @@ export interface ApiConfig {
  * The default configuration for the app.
  */
 export const DEFAULT_API_CONFIG: ApiConfig = {
-  url: API_URL || "https://jsonplaceholder.typicode.com",
+  url: API_URL || "https://pokeapi.co/api/v2",
   timeout: 10000,
 }
