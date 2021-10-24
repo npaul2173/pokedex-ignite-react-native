@@ -6,10 +6,10 @@ import { Instance, SnapshotOut, types } from "mobx-state-tree"
 export const PokemonModel = types
   .model("Pokemon")
   .props({
-    id: types.optional(types.string, null),
+    // id: types.optional(types.string, ""),
     name: types.string,
     url: types.string,
-    type: types.optional(types.string, null),
+    // type: types.optional(types.string, ""),
   })
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars

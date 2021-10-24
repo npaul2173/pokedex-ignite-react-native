@@ -15,14 +15,18 @@ export const PokemonStoreModel = types
   .extend(withEnvironment)
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    savePokemons: (questionSnapshots: PokemonSnapshot[]) => {
-      const pokemonModels: Pokemon[] = questionSnapshots.map((c) => PokemonModel.create(c)) // create model instances from the plain objects
+    savePokemons: (pokemonSnapshotS: PokemonSnapshot[]) => {
+      const pokemonModels: Pokemon[] = pokemonSnapshotS.map((c) => PokemonModel.create(c)) // create model instances from the plain objects
+
+      // console.log({ pokemonModels })
+
       self.pokemons.replace(pokemonModels) // Replace the existing data with the new data
     },
   }))
   .actions((self) => ({
-    getQuestions: flow(function* () {
+    getPokemons: flow(function* () {
       const result: GetAllPokemonsResult = yield self.environment.api.getAllPokemons()
+      // console.log({ result })
 
       if (result.kind === "ok") {
         self.savePokemons(result.pokemons)
