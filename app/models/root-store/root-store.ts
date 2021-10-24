@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-// import { PokemonStore, PokemonStoreModel } from "../pokemon-store/pokemon-store"
+import { PokemonStore, PokemonStoreModel } from "../pokemon-store/pokemon-store"
 import { CharacterStoreModel } from "../character-store/character-store"
 
 /**
@@ -8,7 +8,7 @@ import { CharacterStoreModel } from "../character-store/character-store"
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
   characterStore: types.optional(CharacterStoreModel, {} as any),
-  // pokemonStore: types.optional(PokemonStoreModel, {} as PokemonStore)
+  pokemonStore: types.optional(PokemonStoreModel, {} as PokemonStore)
 
 })
 

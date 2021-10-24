@@ -2,16 +2,16 @@ import { ApisauceInstance, create, ApiResponse } from "apisauce"
 import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
-// import { PokemonSnapshot } from "../../models/pokemon/pokemon"
+import { PokemonSnapshot } from "../../models/pokemon/pokemon"
 
-// const convertQuestion = (raw: any): PokemonSnapshot => {
-//   return {
-//     id: null,
-//     name: raw.name,
-//     url: raw.url,
-//     type: null,
-//   }
-// }
+const convertQuestion = (raw: any): PokemonSnapshot => {
+  return {
+    id: null,
+    name: raw.name,
+    url: raw.url,
+    type: null,
+  }
+}
 
 /**
  * Manages all requests to the API.
@@ -113,26 +113,26 @@ export class Api {
   /**
    * Gets a list of trivia questions.
    */
-  // async getAllPokemons(): Promise<Types.GetAllPokemonsResult> {
-  //   // make the api call
-  //   const response: ApiResponse<any> = await this.apisauce.get("")
+  async getAllPokemons(): Promise<Types.GetAllPokemonsResult> {
+    // make the api call
+    const response: ApiResponse<any> = await this.apisauce.get("")
 
-  //   console.log("RESPONSR FROM SERVER", { response })
+    console.log("RESPONSR FROM SERVER", { response })
 
-  //   // the typical ways to die when calling an api
-  //   if (!response.ok) {
-  //     const problem = getGeneralApiProblem(response)
-  //     if (problem) return problem
-  //   }
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
 
-  //   // transform the data into the format we are expecting
-  //   try {
-  //     const rawQuestions = response.data.results
-  //     const convertedQuestions: PokemonSnapshot[] = rawQuestions.map(convertQuestion)
-  //     return { kind: "ok", pokemons: convertedQuestions }
-  //   } catch (e) {
-  //     __DEV__ && console.tron.log(e.message)
-  //     return { kind: "bad-data" }
-  //   }
-  // }
+    // transform the data into the format we are expecting
+    try {
+      const rawQuestions = response.data.results
+      const convertedQuestions: PokemonSnapshot[] = rawQuestions.map(convertQuestion)
+      return { kind: "ok", pokemons: convertedQuestions }
+    } catch (e) {
+      __DEV__ && console.tron.log(e.message)
+      return { kind: "bad-data" }
+    }
+  }
 }
