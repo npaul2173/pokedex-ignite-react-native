@@ -13,14 +13,13 @@ export const PokemonStoreModel = types
     pokemons: types.optional(types.array(PokemonModel), []),
   })
   .extend(withEnvironment)
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     savePokemons: (pokemonSnapshotS: PokemonSnapshot[]) => {
       const pokemonModels: Pokemon[] = pokemonSnapshotS.map((c) => PokemonModel.create(c)) // create model instances from the plain objects
 
       // console.log({ pokemonModels })
 
-      self.pokemons.replace(pokemonModels) // Replace the existing data with the new data
+      self.pokemons.replace(pokemonSnapshotS) // Replace the existing data with the new data
     },
   }))
   .actions((self) => ({
