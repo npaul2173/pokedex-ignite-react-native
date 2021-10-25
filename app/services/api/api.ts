@@ -2,6 +2,16 @@ import { ApisauceInstance, create, ApiResponse } from "apisauce"
 import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
+import { PokemonSnapshot } from "../../models/pokemon/pokemon"
+
+const convertQuestion = (raw: any): PokemonSnapshot => {
+  return {
+    // id: null,
+    name: raw.name,
+    url: raw.url,
+    // type: null,
+  }
+}
 
 /**
  * Manages all requests to the API.
@@ -96,6 +106,33 @@ export class Api {
       }
       return { kind: "ok", user: resultUser }
     } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
+  /**
+   * Gets a list of trivia questions.
+   */
+  async getAllPokemons(): Promise<Types.GetAllPokemonsResult> {
+    // make the api call
+    const response: ApiResponse<any> = await this.apisauce.get("/pokemon", {
+      limit: 2000,
+      offset: 0,
+    })
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      const rawQuestions = response.data.results
+      const convertedQuestions: PokemonSnapshot[] = rawQuestions.map(convertQuestion)
+      return { kind: "ok", pokemons: convertedQuestions }
+    } catch (e) {
+      __DEV__ && console.tron.log(e.message)
       return { kind: "bad-data" }
     }
   }
