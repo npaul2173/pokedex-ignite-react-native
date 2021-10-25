@@ -120,8 +120,6 @@ export class Api {
       offset: 0,
     })
 
-    // console.log("RESPONSR FROM SERVER", { response })
-
     // the typical ways to die when calling an api
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)

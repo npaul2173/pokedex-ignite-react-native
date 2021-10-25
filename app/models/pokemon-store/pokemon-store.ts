@@ -17,15 +17,12 @@ export const PokemonStoreModel = types
     savePokemons: (pokemonSnapshotS: PokemonSnapshot[]) => {
       const pokemonModels: Pokemon[] = pokemonSnapshotS.map((c) => PokemonModel.create(c)) // create model instances from the plain objects
 
-      // console.log({ pokemonModels })
-
       self.pokemons.replace(pokemonSnapshotS) // Replace the existing data with the new data
     },
   }))
   .actions((self) => ({
     getPokemons: flow(function* () {
       const result: GetAllPokemonsResult = yield self.environment.api.getAllPokemons()
-      // console.log({ result })
 
       if (result.kind === "ok") {
         self.savePokemons(result.pokemons)

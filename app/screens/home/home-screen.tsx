@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { Image, View, ViewStyle } from "react-native"
+import { Image, StatusBar, View, ViewStyle } from "react-native"
 import { AutoImage, GradientBackground, Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
@@ -8,6 +8,7 @@ import { color, spacing } from "../../theme"
 import { useStores } from "../../models"
 import { FlatList } from "react-native-gesture-handler"
 import { Colors } from "react-native/Libraries/NewAppScreen"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.white,
@@ -26,14 +27,8 @@ const defaultImage = require("../../../assets/icon/PDexLogo.png")
 const source = defaultImage
 
 export const HomeScreen = observer(function HomeScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
-
-  // Pull in navigation via hook
-
   const { pokemonStore } = useStores()
   const { pokemons } = pokemonStore
-  console.log(pokemonStore)
 
   useEffect(() => {
     fetchQuestions()
@@ -50,9 +45,9 @@ export const HomeScreen = observer(function HomeScreen() {
     //   <Text preset="header" text="asdas" />
     // </Screen>
 
-    <View testID="HomeScreen" style={ROOT}>
+    <SafeAreaView testID="HomeScreen" style={ROOT}>
+      <StatusBar backgroundColor={"#5CC4FF"} />
       <Screen style={CONTAINER} backgroundColor={"#F6F6F6"}>
-        <Text style={{ color: "black" }}>Pokemons</Text>
         <GradientBackground
           colors={["#5CC4FF", "#0097ED"]}
           style={{ height: 216, position: "absolute", zIndex: -20 }}
@@ -98,6 +93,6 @@ export const HomeScreen = observer(function HomeScreen() {
           }}
         />
       </Screen>
-    </View>
+    </SafeAreaView>
   )
 })
